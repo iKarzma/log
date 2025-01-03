@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="si.css">
+  <link rel="stylesheet" href="shared-animations.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: #f0f2f5;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .image-section {
+      position: relative;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(45deg, #2937f0, #9f007e, #2937f0);
+      background-size: 200% 200%;
+    }
+
+    .image-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://source.unsplash.com/random/1200x800?technology') center/cover;
+      opacity: 0.3;
+    }
+
+    .image-content {
+      position: relative;
+      padding: 4rem;
+      color: white;
+      z-index: 1;
+    }
+
+    .image-content h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .image-content p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .form-section {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+      padding: 3rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-title {
+      text-align: center;
+      color: #1a1a1a;
+      margin-bottom: 2.5rem;
+      font-size: 2.2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .form-group label {
+      position: absolute;
+      right: 45px;
+      top: 1.2rem;
+      padding: 0 0.5rem;
+      background: white;
+      color: #666;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 1.2rem;
+      padding-right: 45px;
+      padding-left: 45px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus~label,
+    .form-group input:not(:placeholder-shown)~label {
+      top: -0.5rem;
+      right: 1rem;
+      font-size: 0.9rem;
+      color: #2937f0;
+      background: white;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #2937f0;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(41, 55, 240, 0.1);
+    }
+
+    .form-group i:not(.password-toggle) {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 1.2rem;
+      z-index: 1;
+    }
+
+    .form-group input::placeholder {
+      color: transparent;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(45deg, #2937f0, #9f007e);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(41, 55, 240, 0.3);
+    }
+
+    .social-login {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .social-login p {
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .social-icons button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #eee;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons button:hover {
+      border-color: #2937f0;
+      transform: translateY(-3px);
+    }
+
+    .forgot-password {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .forgot-password a {
+      color: #2937f0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .forgot-password a:hover {
+      color: #9f007e;
+    }
+
+    @media (max-width: 768px) {
+      .image-section {
+        display: none;
+      }
+
+      .form-section {
+        width: 100%;
+      }
+    }
+
+    /* إضافة أنماط للتحقق من صحة المدخلات */
+    .form-group.success input {
+      border-color: #2ecc71;
+    }
+
+    .form-group.error input {
+      border-color: #e74c3c;
+    }
+
+    .form-group .error-message {
+      color: #e74c3c;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .form-group.error .error-message {
+      display: block;
+    }
+
+    /* تحسين تأثير زر تبديل كلمة المرور */
+    .password-toggle {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #666;
+      z-index: 2;
+    }
+
+    /* تأثيرات إضافية للأزرار */
+    .login-button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* تأثير التحميل */
+    .loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin: -10px 0 0 -10px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* تعديل موضع الأيقونات */
+    .form-group i:not(.password-toggle) {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 1.2rem;
+      z-index: 1;
+    }
+
+    /* تعديل حقل الإدخال ليناسب موضع الأيقونة */
+    .form-group input {
+      width: 100%;
+      padding: 1.2rem;
+      padding-right: 45px;
+      padding-left: 45px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    /* تعديل موضع أيقونة كلمة المرور */
+    .password-toggle {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #666;
+      font-size: 1.2rem;
+      z-index: 1;
+    }
+    .social-login {
+    margin-top: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.social-text {
+    color: #666;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    background: white;
+    padding: 0 15px;
+    z-index: 1;
+}
+
+/* تعديل الخط الفاصل */
+.social-login::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #ddd;
+    z-index: 0;
+}
+
+/* إزالة الخطوط القديمة */
+.social-text::before,
+.social-text::after {
+    display: none;
+}
+
+/* باقي التنسيقات كما هي */
+.social-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* ... باقي الكود كما هو ... */
+    /* تعديل موضع الليبل */
+    .form-group label {
+      position: absolute;
+      right: 45px;
+      top: 1.2rem;
+      padding: 0 0.5rem;
+      background: white;
+      color: #666;
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    /* تعديل موضع الليبل عند التركيز */
+    .form-group input:focus~label,
+    .form-group input:not(:placeholder-shown)~label {
+      top: -0.5rem;
+      right: 1rem;
+      font-size: 0.9rem;
+      color: #2937f0;
+      background: white;
+    }
+
+    /* تحسين تفاعل الأيقونات */
+    .form-group input:focus~i:not(.password-toggle) {
+      color: #2937f0;
+    }
+
+    .form-group:hover i {
+      opacity: 0.8;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #eee;
+    }
+
+    .signup-link a {
+      color: #2937f0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .signup-link a:hover {
+      color: #9f007e;
+    }
+
+    /* تحسين مظهر الفواصل */
+    .social-login {
+      position: relative;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #eee;
+    }
+
+    .social-login p {
+      background: white;
+      padding: 0 1rem;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+<body>
+  <script src="transitions.js"></script>
+  <div class="container">
+    <div class="image-section">
+      <div class="image-content">
+        <h2>مرحباً بعودتك</h2>
+        <p>سعداء برؤيتك مرة أخرى! قم بتسجيل الدخول للوصول إلى حسابك والاستمتاع بخدماتنا</p>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="login-container">
+        <h2 class="login-title">تسجيل الدخول</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder="البريد الإلكتروني" required>
+            <label for="email">البريد الإلكتروني</label>
+            <i class="fas fa-envelope"></i>
+            <div class="error-message"></div>
+          </div>
+          <div class="form-group">
+            <input type="password" id="password" name="password" placeholder="كلمة المرور" required>
+            <label for="password">كلمة المرور</label>
+            <i class="fas fa-lock"></i>
+            <i class="fas fa-eye password-toggle" id="passwordToggle"></i>
+            <div class="error-message"></div>
+          </div>
+          <button type="submit" class="login-button" id="loginButton">تسجيل الدخول</button>
+          <div class="forgot-password">
+            <a href="#">نسيت كلمة المرور؟</a>
+          </div>
+          <div class="signup-link">
+            <p>ليس لديك حساب؟ <a href="signup.html">إنشاء حساب جديد</a></p>
+          </div>
+          <div class="social-login">
+            <p class="social-text">أو سجل باستخدام</p>
+            <div class="social-buttons">
+              <button type="button" class="social-button google">
+                <i class="fab fa-google"></i>
+                <span>Google</span>
+              </button>
+              <button type="button" class="social-button facebook">
+                <i class="fab fa-facebook-f"></i>
+                <span>Facebook</span>
+              </button>
+              <button type="button" class="social-button twitter">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('loginForm');
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const passwordToggle = document.getElementById('passwordToggle');
+      const loginButton = document.getElementById('loginButton');
+
+      // تبديل رؤية كلمة المرور
+      passwordToggle.addEventListener('click', function () {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      // التحقق من صحة البريد الإلكتروني
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+
+      // التحقق من صحة كلمة المرور
+      function validatePassword(password) {
+        return password.length >= 6;
+      }
+
+      // إظهار رسالة الخطأ
+      function showError(input, message) {
+        const formGroup = input.parentElement;
+        formGroup.className = 'form-group error';
+        const errorMessage = formGroup.querySelector('.error-message');
+        errorMessage.innerText = message;
+      }
+
+      // إظهار النجاح
+      function showSuccess(input) {
+        const formGroup = input.parentElement;
+        formGroup.className = 'form-group success';
+      }
+
+      // معالجة تقديم النموذج
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        let isValid = true;
+
+        // التحقق من البريد الإلكتروني
+        if (!validateEmail(email.value)) {
+          showError(email, 'يرجى إدخال بريد إلكتروني صحيح');
+          isValid = false;
+        } else {
+          showSuccess(email);
+        }
+
+        // التحقق من كلمة المرور
+        if (!validatePassword(password.value)) {
+          showError(password, 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل');
+          isValid = false;
+        } else {
+          showSuccess(password);
+        }
+
+        // إذا كانت جميع البيانات صحيحة
+        if (isValid) {
+          loginButton.classList.add('loading');
+          loginButton.disabled = true;
+
+          // محاكاة عملية تسجيل الدخول
+          setTimeout(() => {
+            alert('تم تسجيل الدخول بنجاح!');
+            loginButton.classList.remove('loading');
+            loginButton.disabled = false;
+            form.reset();
+          }, 2000);
+        }
+      });
+
+      // تحديث حالة الحقول عند الكتابة
+      [email, password].forEach(input => {
+        input.addEventListener('input', function () {
+          const formGroup = this.parentElement;
+          formGroup.classList.remove('error');
+          formGroup.classList.remove('success');
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+/* الأساسيات */
+body {
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  overflow-x: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.container.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* تحريكات القسم الأيمن */
+.slide-from-right {
+  animation: slideFromRight 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slide-to-right {
+  animation: slideToRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* تحريكات القسم الأيسر */
+.slide-from-left {
+  animation: slideFromLeft 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.slide-to-left {
+  animation: slideToLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* تعريف التحريكات */
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideToLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* تحسينات الأداء */
+.form-section,
+.image-section {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-section.loaded,
+.image-section.loaded {
+  opacity: 1;
+}
+
+/* حالة الخروج */
+.container.exit {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* وضع التسجيل */
+.container.signup-mode {
+  flex-direction: row-reverse;
+}
+
+/* منع التفاعل أثناء الانتقال */
+.container.transitioning {
+  pointer-events: none;
+}
+
+/* تأثير الخلفية */
+.image-section {
+  background-size: 200% 200%;
+  animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* تأكيد عدم وجود تأخير */
+* {
+  transition-delay: 0s !important;
+}
+
+/* تحسين التحميل على الشاشات الصغيرة */
+@media (max-width: 768px) {
+  .container,
+  .form-section,
+  .image-section {
+    transition-duration: 0.3s;
+  }
+}
